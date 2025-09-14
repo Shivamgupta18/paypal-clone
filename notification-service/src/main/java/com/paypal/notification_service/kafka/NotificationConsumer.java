@@ -32,6 +32,7 @@ public class NotificationConsumer {
         System.out.println("Received transaction id "+transaction.getReceiverId());
         String notify= "$"+ transaction.getAmount()+ " received from "+ transaction.getSenderId();
         notification.setMessage(notify);
+        System.out.print("message here");
         notification.setSentAt(LocalDateTime.now());
         notificationRepository.save(notification);
         System.out.println("Notification saved to database: "+ notification);
