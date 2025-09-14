@@ -1,0 +1,32 @@
+server:
+  port: 8087
+
+spring:
+  application:
+    name: notification-service
+
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: notification-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      properties:
+        # Add both producer & consumer entity packages
+        spring.json.trusted.packages: "com.paypal.notification_service.entity,com.paypal.entity"
+        # Match the producer's Transaction class
+        spring.json.value.default.type: com.paypal.entity.Transaction
+        # Configure ErrorHandlingDeserializer
+        spring.deserializer.key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
+        spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/notificationDb
+    username: root
+    password: Shivam@06
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
